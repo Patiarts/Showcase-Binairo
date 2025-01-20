@@ -1,0 +1,199 @@
+BINAIRO RULES:
+- The goal of Binairo is to fill all board cells 
+  with a white stone or a black stone.
+- There must not be more than two stones of the 
+  same color in a line anywhere on the board.
+- Each row and each column must have the same 
+  number of white and black stones.
+- Every row must be unique, and every column 
+  must be unique.
+- The game is won once the board has been filled 
+  with stones according to the rules.
+
+
+
+GAMEBOARD GUIDE:
+- Press "Play" to start the game. Stones 
+  may only be placed when the timer is running.
+- Place stones on the board with the mouse.
+  Left clicking will add a white stone,
+  right clicking will add a black stone.
+  Remove placed stones with the corresponding
+  mouse button.
+- Once the board has been filled, pressing
+  "Check" will end the game, if the solution
+  is valid. Solve time is displayed.
+- Press "Reset" to start the game again with the
+  same board setup. 
+- Preset stones are "nailed" to the board, and
+  may not be changed.
+
+
+
+BOARD SETUP GUIDE:
+- Here the user may set a new game board to
+  play Binairo on.
+- The board may be set in one of thee different
+  ways; randomly, by input, or manually.
+- RANDOM setup takes a seed number and generates 
+  a random board from it. NOTE: Random boards may
+  end up being unsolvable!
+- INPUT setup takes a text input and builds a 
+  game board based on it. Input text should be
+  enclosed in quote marks. From top left to bottom
+  right, input a space (" ") for an empty cell,
+  a zero ("0") for a white stone, and a one ("1")
+  for a black stone. Input length must match the 
+  board, and definitely invalid boards may not be
+  input. EXAMPLE INPUT: "10  01  1 0 0 1 " results
+  in a 4x4-board like this;
+	1 0 * *
+  	0 1 * *
+  	1 * 0 *
+  	0 * 1 *
+- MANUAL setup let's the user set a starting
+  position directly on the board. Again, definitely
+  invalid boards are disallowed.
+
+
+
+ERRORS AND DISCLAIMER:
+- Board generation produces an error message, if 
+  the given seed or input leads to a clearly 
+  unsolvable board, ie. a board that breaks one of
+  the three rules from the outset.
+- HOWEVER! This will not prevent the program or user
+  from setting otherwise unsolvable boards, where
+  illegal stone placement is unavoidable.
+  example: 
+	* * * *
+	0 0 * *
+	* * 1 *
+	* * 1 *
+  a board like this is unsolvable, but will not 
+  trigger the rudimentary error detection of this
+  program, because the setup doesn't directly break
+  any placement rules.
+- Random board have a higher likelyhood of being 
+  immediately unsolvable, the bigger the board gets.
+  For example, a 20x20 board very often starts out
+  by breaking one of the Binairo rules than a smaller 
+  board. This just follows from the simple randomization
+  method. This is why bigger boards may seem to not
+  respond correctly to the RANDOM-set mode; more seed
+  values lead to unsolvable boards. The seed "19" DOES 
+  generate a 20x20 board, although I haven't the dimmest
+  whether the board is ACTUALLY solvable or not.
+
+
+
+PROGRAM STRUCTURE AND DESIGN DECISIONS:
+There are five modules to this program: MainWindow,
+GameBoard, BinairoCell, TimerLabel, and InfoWindow.
+	MainWindow is the primary UI component of 
+this program. All user input is handled through 
+MainWindow.
+	GameBoard is the logical engine that runs
+the Binairo game. The program handles all game logic
+throgh GameBoard.
+	BinairoCell is the centerpiece of the action.
+It's a simple widget, designed for intuitive Binairo
+gaming. It uses mouse input to place ZEROs and ONEs 
+in the GameBoard, and can also be cleared intuitively.
+	TimerLabel is  modified QLabel that shows the time 
+spent solving to the hundredth of a second. It should 
+definitely be accurate enough for even Binairo-pros.
+	InfoWindow is the simplest module. I only display
+this here info text to the user.
+
+The MainWindow module controls all other modules.
+All calls for the GameBoard module come from MainWindow.
+In attempting to accomodate the pre-given GameBoard module,
+the GameBoard module sends hardly any information back to 
+MainWindow, only a few bool-values, based on which
+MainWindow then controls all UI elements and modules. 
+	The only exception here is that the BinairoCell
+module controls the actual value of the GameBoard, not
+MainWindow. In fact, BinairoCell instances are DEFINED
+by their connection to GameBoard; they contain a pointer
+directly onto the very board Binairo is played on.
+
+Implemented required features:
+- A Binairo board constisting of widgets is
+  shown to the user.
+- The user can choose to setup the board randomly
+  or by input.
+- The size of the board can be altered.
+- The current game state is shown on the board, ie.
+  empty or full cells are actually empty or full.
+- The game may be reset both during and after the solving.
+- Upon finishing a solve, the solve time is displayed.
+- Program functionality is documented (here), 
+  complete with instructions, rules, program structure
+  information and design decisions.
+
+Implemented bonus features:
+- 1. Binairo elements are implemented as pictures, not just
+  zeroes and ones on QLabels.
+- 2. The user may change the board size through the UI,
+  not only (or at all i think) through code.
+- 7. The UI background color changes to gold when a game
+  is won, and the default color is restored upon reset.
+- 8. The game may be paused, which stops the timer and
+  disallows board changes.
+- 9. The third rule of Binairo is implemented.
+- 10. There is a helpo button (though labeled with "?")
+  that shows the rules and instructions for the program.
+- 11. Something has been done in a separate window, namely,
+  this here info dump.
+
+Implemented other features that may or may not be bonus features:
+- There is a third way to set the board: MANUAL placement.
+  This I think most worthy of bonus feature status.
+- The user may place whatever they like, just like 
+  in real life, but the board is solved validly 
+  only if it, y'know, is.
+- The user may place different stones with different mouse
+  keys, instead of with different keyboard keys.
+- The board looks really nice, what with the alternating
+  backgrounds, circular stones and changing between dis-
+  and en-abled cells. :)
+- The starting position is immutable,and locked starting cells
+  are clearly differentiated graphically from the rest.
+- There are two ways to reset: resetting the board currently
+  being solved to it's starting position, OR setting
+  an entirely new board. This makes trying again easier,
+  without needing to keep the board setup parameters unchanged.
+- The UI looks nice in general?? The gameboard keeps a minimum
+  size and the stones remain circular even on unsquarely resized
+  boards.
+- The default starting board is a B for binairo, pretty swanky :D .
+  What's more, it's solvable!
+
+Unfulfilled development dreams:
+- Hiding the board when the game is paused. This would
+  hinder "cheating" by solving while paused, and 
+  unpausing just to place the stones correctly.
+  I think this would be very simple to add.
+- A Check box to show the board, even while paused.
+  This would have made "cheating" possible again, but
+  at least there isn't plausible deniability for "cheaters".
+- A high score system. It would have been displayed 
+  under the input line in the current UI, where there
+  is now a lot of nothing. The system would have stored
+  and sorted the board setup, solve time, name of solver,
+  as well as the time and date of the solve.
+- A WAY TO GENERATE SOLVABLE BOARDS :(. I wanted badly to
+  actually randomize the boards properly, without having
+  to risk an unsolvable board stumping users to frustration.
+  Had i had more time, I'd have added a forward solver 
+  method to the now-defunct "recursive_solve()" method 
+  in the GameBoard module, which could have dramatically
+  sped up the algorithm. Alas, I didn't.
+- I forgot to add this document to version control :(
+- Pretty much all other unimplemented bonus features, 
+  especially highlighting erroneous cells.
+
+Assignment: 	COMP.CS.110 - (P) Binairon paluu
+Program author: Patrik Reitkivi
+student number: 151106280
