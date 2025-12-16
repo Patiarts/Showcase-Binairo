@@ -4,6 +4,7 @@ modification/adding rules was allowed (the model initially did not include all B
 
 Below I list implemented features and my grade. For a more in-depth documentation, see the file /binairo_gui/instructions.txt.
 In total, 100 points were available, and i got 90.
+After that, instructions on how to run this program.
 
 **Minimum requirements (worth 50 points):**
 - display a game window and binairo grid to player
@@ -36,5 +37,14 @@ I added also:
 - extra-beautiful GUI
 
 For these bonus features, I got 50/50 points.
-  
+
+**Run instructions:**
+Unfortunately, I have not yet learned how to export Qt applications and/or implement installers for them.
+The current best way to run this program that I know, is this:
+ 
+1. Install Qt creator (if you don't already have it). The program depends strongly on the Qt GUI framework.
+2. Once Qt creator is installed, open the file Showcase-binairo/binairo_gui/binairo_gui.pro in Qt creator.
+3. Press the "build and run" button (green triangle button) in the bottom left area of the Qt creator window.
+
+This repository includes the Build folder, in case someone knows how to use the included files to run the program without Qt creator.
 
